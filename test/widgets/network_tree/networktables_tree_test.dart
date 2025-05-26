@@ -21,11 +21,7 @@ void main() {
   testWidgets('Network Tables Tree with leading slashes', (widgetTester) async {
     NTConnection ntConnection = createMockOnlineNT4(
       virtualTopics: [
-        NT4Topic(
-          name: '/Testing/Integer',
-          type: NT4Type.int(),
-          properties: {},
-        ),
+        NT4Topic(name: '/Testing/Integer', type: NT4Type.int(), properties: {}),
         NT4Topic(
           name: '/Testing/Double',
           type: NT4Type.double(),
@@ -78,11 +74,7 @@ void main() {
   ) async {
     NTConnection ntConnection = createMockOnlineNT4(
       virtualTopics: [
-        NT4Topic(
-          name: 'Testing/Integer',
-          type: NT4Type.int(),
-          properties: {},
-        ),
+        NT4Topic(name: 'Testing/Integer', type: NT4Type.int(), properties: {}),
         NT4Topic(
           name: 'Testing/Double',
           type: NT4Type.double(),
@@ -133,11 +125,7 @@ void main() {
   testWidgets('Network Tables Tree searching', (widgetTester) async {
     NTConnection ntConnection = createMockOnlineNT4(
       virtualTopics: [
-        NT4Topic(
-          name: '/Testing/Integer',
-          type: NT4Type.int(),
-          properties: {},
-        ),
+        NT4Topic(name: '/Testing/Integer', type: NT4Type.int(), properties: {}),
         NT4Topic(
           name: '/Testing/Double',
           type: NT4Type.double(),

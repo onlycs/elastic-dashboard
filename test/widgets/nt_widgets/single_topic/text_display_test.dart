@@ -223,6 +223,7 @@ void main() {
                   properties: {},
                 ),
               ],
+              virtualValues: {'Test/Display Value': 0},
             ),
         preferences: preferences,
         ntStructMeta: null,

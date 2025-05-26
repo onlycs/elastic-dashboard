@@ -55,9 +55,7 @@ class SchemaInfo {
       return;
     }
 
-    logger.debug(
-      'Adding schema: $name, $schema',
-    );
+    logger.debug('Adding schema: $name, $schema');
 
     _schemas[name] = schema;
   }
@@ -92,14 +90,9 @@ class NTFieldSchema {
   final String field;
   final NT4Type type;
 
-  NTFieldSchema({
-    required this.field,
-    required this.type,
-  });
+  NTFieldSchema({required this.field, required this.type});
 
-  static NTFieldSchema fromJson(
-    Map<String, dynamic> json,
-  ) {
+  static NTFieldSchema fromJson(Map<String, dynamic> json) {
     return NTFieldSchema(
       field: json['name'] ?? json['field'],
       type: NT4Type.parse('struct:${json['type']}'),
@@ -110,30 +103,18 @@ class NTFieldSchema {
     NT4Type fieldType = NT4Type.parse(type);
 
     if (fieldType.leaf.isStruct) {
-      return NTFieldSchema(
-        field: name,
-        type: fieldType,
-      );
+      return NTFieldSchema(field: name, type: fieldType);
     } else {
-      return NTFieldSchema(
-        field: name,
-        type: fieldType,
-      );
+      return NTFieldSchema(field: name, type: fieldType);
     }
   }
 
   NTFieldSchema clone() {
-    return NTFieldSchema(
-      field: field,
-      type: type,
-    );
+    return NTFieldSchema(field: field, type: type);
   }
 
   Map<String, dynamic> toJson() {
-    return {
-      'field': field,
-      'type': type.serialize(),
-    };
+    return {'field': field, 'type': type.serialize()};
   }
 
   NTStructSchema? get substruct =>
@@ -146,15 +127,10 @@ class NTStructSchema {
   final String name;
   final List<NTFieldSchema> fields;
 
-  NTStructSchema({
-    required this.name,
-    required String schema,
-  }) : fields = _tryParseSchema(name, schema);
+  NTStructSchema({required this.name, required String schema})
+    : fields = _tryParseSchema(name, schema);
 
-  NTStructSchema.raw({
-    required this.name,
-    required this.fields,
-  });
+  NTStructSchema.raw({required this.name, required this.fields});
 
   NTFieldSchema? operator [](String key) {
     for (final field in fields) {
@@ -209,9 +185,10 @@ class NTStructSchema {
   static NTStructSchema fromJson(Map<String, dynamic> json) {
     return NTStructSchema.raw(
       name: json['name'] ?? json['type'],
-      fields: (tryCast<List<dynamic>>(json['fields']) ?? [])
-          .map((field) => NTFieldSchema.fromJson(tryCast(field) ?? {}))
-          .toList(),
+      fields:
+          (tryCast<List<dynamic>>(json['fields']) ?? [])
+              .map((field) => NTFieldSchema.fromJson(tryCast(field) ?? {}))
+              .toList(),
     );
   }
 }
@@ -256,10 +233,7 @@ class NTStruct {
   late final Map<String, NTStructValue> values;
   late final int consumed;
 
-  NTStruct({
-    required this.schema,
-    required Uint8List data,
-  }) {
+  NTStruct({required this.schema, required Uint8List data}) {
     var (consumed, values) = _parseData(schema, data);
     this.values = values;
     this.consumed = consumed;
@@ -284,7 +258,9 @@ class NTStruct {
   }
 
   static (int, Map<String, NTStructValue>) _parseData(
-      NTStructSchema schema, Uint8List data) {
+    NTStructSchema schema,
+    Uint8List data,
+  ) {
     Map<String, NTStructValue> values = {};
     int offset = 0;
 
@@ -316,33 +292,39 @@ class NTStruct {
   }
 
   static (int, NTStructValue) _parseValueInner(
-      NTFieldSchema field, Uint8List data) {
+    NTFieldSchema field,
+    Uint8List data,
+  ) {
     if (field.type.fragment == NT4TypeFragment.boolean) {
       return (1, NTStructValue.fromBool(data[0] != 0));
     } else if (field.type.fragment == NT4TypeFragment.int32) {
       return (
         4,
         NTStructValue.fromInt(
-            data.buffer.asByteData().getInt32(0, Endian.little))
+          data.buffer.asByteData().getInt32(0, Endian.little),
+        ),
       );
     } else if (field.type.fragment == NT4TypeFragment.float32) {
       return (
         4,
         NTStructValue.fromDouble(
-            data.buffer.asByteData().getFloat32(0, Endian.little))
+          data.buffer.asByteData().getFloat32(0, Endian.little),
+        ),
       );
     } else if (field.type.fragment == NT4TypeFragment.float64) {
       return (
         8,
         NTStructValue.fromDouble(
-            data.buffer.asByteData().getFloat64(0, Endian.little))
+          data.buffer.asByteData().getFloat64(0, Endian.little),
+        ),
       );
     } else if (field.type.fragment == NT4TypeFragment.string) {
       int length = data.buffer.asByteData().getInt32(0, Endian.little);
       return (
         length + 4,
         NTStructValue.fromString(
-            String.fromCharCodes(data.sublist(4, 4 + length)))
+          String.fromCharCodes(data.sublist(4, 4 + length)),
+        ),
       );
     } else if (field.type.isStruct) {
       NTStructSchema? substruct = field.substruct;
@@ -351,10 +333,7 @@ class NTStruct {
         throw Exception('No schema found for struct: ${field.type.name}');
       }
 
-      NTStruct sub = NTStruct(
-        schema: substruct,
-        data: data,
-      );
+      NTStruct sub = NTStruct(schema: substruct, data: data);
 
       return (sub.consumed, NTStructValue.fromStruct(sub));
     } else {
@@ -363,7 +342,10 @@ class NTStruct {
   }
 
   static (int, NTStructValue<List<NTStructValue>>) _parseArray(
-      NTFieldSchema field, Uint8List data, int length) {
+    NTFieldSchema field,
+    Uint8List data,
+    int length,
+  ) {
     List<NTStructValue> values = [];
     int offset = 0;
 

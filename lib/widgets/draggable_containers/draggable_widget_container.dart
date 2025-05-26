@@ -57,12 +57,14 @@ class DraggableWidgetContainer extends StatelessWidget {
         allowFlippingWhileResizing: false,
         handleTapSize: 12,
         visibleHandles: const {},
-        supportedDragDevices: PointerDeviceKind.values
-            .whereNot((e) => e == PointerDeviceKind.trackpad)
-            .toSet(),
-        supportedResizeDevices: PointerDeviceKind.values
-            .whereNot((e) => e == PointerDeviceKind.trackpad)
-            .toSet(),
+        supportedDragDevices:
+            PointerDeviceKind.values
+                .whereNot((e) => e == PointerDeviceKind.trackpad)
+                .toSet(),
+        supportedResizeDevices:
+            PointerDeviceKind.values
+                .whereNot((e) => e == PointerDeviceKind.trackpad)
+                .toSet(),
         draggable: model.draggable,
         resizable: model.draggable,
         contentBuilder: (BuildContext context, Rect rect, Flip flip) {

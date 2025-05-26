@@ -190,8 +190,9 @@ class FieldWidgetModel extends MultiTopicNTWidgetModel {
     _robotColor = Color(
       tryCast(jsonData['robot_color']) ?? Colors.red.toARGB32(),
     );
-    _trajectoryColor =
-        Color(tryCast(jsonData['trajectory_color']) ?? Colors.white.toARGB32());
+    _trajectoryColor = Color(
+      tryCast(jsonData['trajectory_color']) ?? Colors.white.toARGB32(),
+    );
 
     if (!FieldImages.hasField(_fieldGame)) {
       _fieldGame = _defaultGame;

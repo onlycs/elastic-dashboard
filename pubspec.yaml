@@ -1,10 +1,10 @@
 name: elastic_dashboard
 description: A simple and modern dashboard for FRC.
-publish_to: 'none'
+publish_to: "none"
 version: 2025.2.2
 
 environment:
-  sdk: '^3.7.0'
+  sdk: "^3.7.0"
 
 dependencies:
   animations: ^2.0.11
