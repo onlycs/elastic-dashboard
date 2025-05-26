@@ -33,7 +33,7 @@ void main() {
       channelTopics.add(
         NT4Topic(
           name: 'Test/Power Distribution/Chan$i',
-          type: NT4TypeStr.kFloat32,
+          type: NT4Type.float(),
           properties: {},
         ),
       );
@@ -45,12 +45,12 @@ void main() {
       virtualTopics: [
         NT4Topic(
           name: 'Test/Power Distribution/Voltage',
-          type: NT4TypeStr.kFloat32,
+          type: NT4Type.float(),
           properties: {},
         ),
         NT4Topic(
           name: 'Test/Power Distribution/TotalCurrent',
-          type: NT4TypeStr.kFloat32,
+          type: NT4Type.float(),
           properties: {},
         ),
         ...channelTopics,
@@ -67,6 +67,7 @@ void main() {
     NTWidgetModel powerDistributionModel = NTWidgetBuilder.buildNTModelFromJson(
       ntConnection,
       preferences,
+      null,
       'PowerDistribution',
       powerDistributionJson,
     );
@@ -79,6 +80,7 @@ void main() {
     NTWidgetModel powerDistributionModel = NTWidgetBuilder.buildNTModelFromJson(
       ntConnection,
       preferences,
+      null,
       'PDP',
       powerDistributionJson,
     );
@@ -104,6 +106,7 @@ void main() {
     NTWidgetModel powerDistributionModel = NTWidgetBuilder.buildNTModelFromJson(
       ntConnection,
       preferences,
+      null,
       'PowerDistribution',
       powerDistributionJson,
     );

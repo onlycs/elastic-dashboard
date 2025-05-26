@@ -270,7 +270,7 @@ void main() {
         virtualTopics: [
           NT4Topic(
             name: '/Elastic/SelectedTab',
-            type: NT4TypeStr.kString,
+            type: NT4Type.string(),
             properties: {},
           ),
         ],
@@ -303,7 +303,7 @@ void main() {
         virtualTopics: [
           NT4Topic(
             name: '/Elastic/SelectedTab',
-            type: NT4TypeStr.kString,
+            type: NT4Type.string(),
             properties: {},
           ),
         ],
@@ -336,7 +336,7 @@ void main() {
         virtualTopics: [
           NT4Topic(
             name: '/Elastic/SelectedTab',
-            type: NT4TypeStr.kString,
+            type: NT4Type.string(),
             properties: {},
           ),
         ],

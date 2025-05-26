@@ -22,7 +22,7 @@ void main() {
 
   final Map<String, dynamic> voltageViewJson = {
     'topic': 'Test/Double Value',
-    'data_type': 'double',
+    'data_type': NT4Type.double().serialize(),
     'period': 0.100,
     'min_value': 4.0,
     'max_value': 13.0,
@@ -42,7 +42,7 @@ void main() {
       virtualTopics: [
         NT4Topic(
           name: 'Test/Double Value',
-          type: NT4TypeStr.kFloat64,
+          type: NT4Type.double(),
           properties: {},
         ),
       ],
@@ -54,6 +54,7 @@ void main() {
     NTWidgetModel voltageViewModel = NTWidgetBuilder.buildNTModelFromJson(
       ntConnection,
       preferences,
+      null,
       'Voltage View',
       voltageViewJson,
     );
@@ -89,8 +90,9 @@ void main() {
     VoltageViewModel voltageViewModel = VoltageViewModel(
       ntConnection: ntConnection,
       preferences: preferences,
+      ntStructMeta: null,
       topic: 'Test/Double Value',
-      dataType: 'double',
+      dataType: NT4Type.double(),
       period: 0.100,
       minValue: 4.0,
       maxValue: 13.0,
@@ -108,8 +110,9 @@ void main() {
     NTWidgetModel voltageViewModel = VoltageViewModel(
       ntConnection: ntConnection,
       preferences: preferences,
+      ntStructMeta: null,
       topic: 'Test/Double Value',
-      dataType: 'double',
+      dataType: NT4Type.double(),
       period: 0.100,
       minValue: -5.0,
       maxValue: 5.0,
@@ -147,8 +150,9 @@ void main() {
     NTWidgetModel voltageViewModel = VoltageViewModel(
       ntConnection: ntConnection,
       preferences: preferences,
+      ntStructMeta: null,
       topic: 'Test/Double Value',
-      dataType: 'double',
+      dataType: NT4Type.double(),
       period: 0.100,
       minValue: 4.0,
       maxValue: 13.0,
@@ -186,8 +190,9 @@ void main() {
     NTWidgetModel voltageViewModel = VoltageViewModel(
       ntConnection: ntConnection,
       preferences: preferences,
+      ntStructMeta: null,
       topic: 'Test/Double Value',
-      dataType: 'double',
+      dataType: NT4Type.double(),
       period: 0.100,
       minValue: 4.0,
       maxValue: 13.0,
@@ -224,8 +229,9 @@ void main() {
     VoltageViewModel voltageViewModel = VoltageViewModel(
       ntConnection: ntConnection,
       preferences: preferences,
+      ntStructMeta: null,
       topic: 'Test/Double Value',
-      dataType: 'double',
+      dataType: NT4Type.double(),
       period: 0.100,
       minValue: 4.0,
       maxValue: 13.0,

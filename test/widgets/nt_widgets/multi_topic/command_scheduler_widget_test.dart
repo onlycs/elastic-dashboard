@@ -30,17 +30,17 @@ void main() {
       virtualTopics: [
         NT4Topic(
           name: 'Test/Command Scheduler/Names',
-          type: NT4TypeStr.kStringArr,
+          type: NT4Type.array(NT4Type.string()),
           properties: {},
         ),
         NT4Topic(
           name: 'Test/Command Scheduler/Ids',
-          type: NT4TypeStr.kIntArr,
+          type: NT4Type.array(NT4Type.int()),
           properties: {},
         ),
         NT4Topic(
           name: 'Test/Command Scheduler/Cancel',
-          type: NT4TypeStr.kIntArr,
+          type: NT4Type.array(NT4Type.int()),
           properties: {},
         ),
       ],
@@ -55,6 +55,7 @@ void main() {
     NTWidgetModel commandSchedulerModel = NTWidgetBuilder.buildNTModelFromJson(
       ntConnection,
       preferences,
+      null,
       'Scheduler',
       commandSchedulerJson,
     );
@@ -80,6 +81,7 @@ void main() {
     NTWidgetModel commandSchedulerModel = NTWidgetBuilder.buildNTModelFromJson(
       ntConnection,
       preferences,
+      null,
       'Scheduler',
       commandSchedulerJson,
     );

@@ -916,7 +916,7 @@ class TabGrid extends StatelessWidget {
                   visible: container.previewVisible,
                   child: Container(
                     decoration: BoxDecoration(
-                      color: Colors.white.withValues(alpha: 0.25),
+                      color: Colors.white.withAlpha(64),
                       borderRadius: BorderRadius.circular(
                         model.preferences.getDouble(PrefKeys.cornerRadius) ??
                             Defaults.cornerRadius,
@@ -1040,8 +1040,8 @@ class TabGrid extends StatelessWidget {
             decoration: BoxDecoration(
               color:
                   (validLocation)
-                      ? Colors.white.withValues(alpha: 0.25)
-                      : Colors.black.withValues(alpha: 0.1),
+                      ? Colors.white.withAlpha(64)
+                      : Colors.black.withAlpha(26),
               borderRadius: BorderRadius.circular(
                 model.preferences.getDouble(PrefKeys.cornerRadius) ??
                     Defaults.cornerRadius,

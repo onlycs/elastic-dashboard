@@ -4,6 +4,7 @@ import 'package:dot_cast/dot_cast.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import 'package:elastic_dashboard/services/log.dart';
+import 'package:elastic_dashboard/services/nt4_client.dart';
 import 'package:elastic_dashboard/services/nt_connection.dart';
 import 'package:elastic_dashboard/services/settings.dart';
 import 'package:elastic_dashboard/widgets/draggable_containers/draggable_widget_container.dart';
@@ -50,13 +51,15 @@ typedef NTModelJsonProvider =
       required Map<String, dynamic> jsonData,
       required NTConnection ntConnection,
       required SharedPreferences preferences,
+      NT4StructMeta? ntStructMeta,
     });
 
 typedef NTModelProvider =
     NTWidgetModel Function({
-      String dataType,
-      required NTConnection ntConnection,
+      NT4Type? dataType,
       double period,
+      NT4StructMeta? ntStructMeta,
+      required NTConnection ntConnection,
       required SharedPreferences preferences,
       required String topic,
     });
@@ -88,14 +91,14 @@ class NTWidgetBuilder {
 
     logger.info('Configuring NT Widget Builder');
 
-    register(
+    registerSingleTopic(
       name: BooleanBox.widgetType,
       model: BooleanBoxModel.new,
       widget: BooleanBox.new,
       fromJson: BooleanBoxModel.fromJson,
     );
 
-    register(
+    registerSingleTopic(
       name: GraphWidget.widgetType,
       model: GraphModel.new,
       widget: GraphWidget.new,
@@ -104,14 +107,14 @@ class NTWidgetBuilder {
       minHeight: _normalSize * 2,
     );
 
-    register(
+    registerSingleTopic(
       name: MatchTimeWidget.widgetType,
       model: MatchTimeModel.new,
       widget: MatchTimeWidget.new,
       fromJson: MatchTimeModel.fromJson,
     );
 
-    register(
+    registerSingleTopic(
       name: NumberBar.widgetType,
       model: NumberBarModel.new,
       widget: NumberBar.new,
@@ -119,7 +122,7 @@ class NTWidgetBuilder {
       minHeight: _normalSize,
     );
 
-    register(
+    registerSingleTopic(
       name: NumberSlider.widgetType,
       model: NumberSliderModel.new,
       widget: NumberSlider.new,
@@ -127,8 +130,9 @@ class NTWidgetBuilder {
       minHeight: _normalSize,
     );
 
-    registerWithAlias(
-      names: {RadialGaugeWidget.widgetType, 'Simple Dial'},
+    registerSingleTopic(
+      name: RadialGaugeWidget.widgetType,
+      aliases: {'Simple Dial'},
       model: RadialGaugeModel.new,
       widget: RadialGaugeWidget.new,
       fromJson: RadialGaugeModel.fromJson,
@@ -136,14 +140,15 @@ class NTWidgetBuilder {
       minHeight: _normalSize * 1.6,
     );
 
-    registerWithAlias(
-      names: {TextDisplay.widgetType, 'Text View'},
+    registerSingleTopic(
+      name: TextDisplay.widgetType,
+      aliases: {'Text View'},
       model: TextDisplayModel.new,
       widget: TextDisplay.new,
       fromJson: TextDisplayModel.fromJson,
     );
 
-    register(
+    registerSingleTopic(
       name: VoltageView.widgetType,
       model: VoltageViewModel.new,
       widget: VoltageView.new,
@@ -151,14 +156,14 @@ class NTWidgetBuilder {
       minHeight: _normalSize,
     );
 
-    register(
+    registerMultiTopic(
       name: AccelerometerWidget.widgetType,
       model: AccelerometerModel.new,
       widget: AccelerometerWidget.new,
       fromJson: AccelerometerModel.fromJson,
     );
 
-    register(
+    registerMultiTopic(
       name: SwerveDriveWidget.widgetType,
       model: BasicSwerveModel.new,
       widget: SwerveDriveWidget.new,
@@ -169,7 +174,7 @@ class NTWidgetBuilder {
       defaultHeight: 2,
     );
 
-    register(
+    registerMultiTopic(
       name: CameraStreamWidget.widgetType,
       model: CameraStreamModel.new,
       widget: CameraStreamWidget.new,
@@ -180,15 +185,16 @@ class NTWidgetBuilder {
       defaultHeight: 2,
     );
 
-    registerWithAlias(
-      names: {ComboBoxChooser.widgetType, 'String Chooser'},
+    registerMultiTopic(
+      name: ComboBoxChooser.widgetType,
+      aliases: {'String Chooser'},
       model: ComboBoxChooserModel.new,
       widget: ComboBoxChooser.new,
       fromJson: ComboBoxChooserModel.fromJson,
       minHeight: _normalSize * 0.85,
     );
 
-    register(
+    registerMultiTopic(
       name: CommandSchedulerWidget.widgetType,
       model: CommandSchedulerModel.new,
       widget: CommandSchedulerWidget.new,
@@ -199,7 +205,7 @@ class NTWidgetBuilder {
       defaultHeight: 3,
     );
 
-    register(
+    registerMultiTopic(
       name: CommandWidget.widgetType,
       model: CommandModel.new,
       widget: CommandWidget.new,
@@ -209,8 +215,9 @@ class NTWidgetBuilder {
       defaultWidth: 2,
     );
 
-    registerWithAlias(
-      names: {DifferentialDrive.widgetType, 'Differential Drivebase'},
+    registerMultiTopic(
+      name: DifferentialDrive.widgetType,
+      aliases: {'Differential Drivebase'},
       model: DifferentialDriveModel.new,
       widget: DifferentialDrive.new,
       fromJson: DifferentialDriveModel.fromJson,
@@ -220,8 +227,9 @@ class NTWidgetBuilder {
       defaultHeight: 2,
     );
 
-    registerWithAlias(
-      names: {EncoderWidget.widgetType, 'Quadrature Encoder'},
+    registerMultiTopic(
+      name: EncoderWidget.widgetType,
+      aliases: {'Quadrature Encoder'},
       model: EncoderModel.new,
       widget: EncoderWidget.new,
       fromJson: EncoderModel.fromJson,
@@ -230,8 +238,9 @@ class NTWidgetBuilder {
       defaultWidth: 2,
     );
 
-    registerWithAlias(
-      names: {FieldWidget.widgetType, 'Field2d'},
+    registerMultiTopic(
+      name: FieldWidget.widgetType,
+      aliases: {'Field2d'},
       model: FieldWidgetModel.new,
       widget: FieldWidget.new,
       fromJson: FieldWidgetModel.fromJson,
@@ -241,7 +250,7 @@ class NTWidgetBuilder {
       defaultHeight: 2,
     );
 
-    register(
+    registerMultiTopic(
       name: FMSInfo.widgetType,
       model: FMSInfoModel.new,
       widget: FMSInfo.new,
@@ -251,7 +260,7 @@ class NTWidgetBuilder {
       defaultWidth: 3,
     );
 
-    register(
+    registerMultiTopic(
       name: Gyro.widgetType,
       model: GyroModel.new,
       widget: Gyro.new,
@@ -262,15 +271,16 @@ class NTWidgetBuilder {
       defaultHeight: 2,
     );
 
-    registerWithAlias(
-      names: {MotorController.widgetType, 'Nidec Brushless'},
+    registerMultiTopic(
+      name: MotorController.widgetType,
+      aliases: {'Nidec Brushless'},
       model: MotorControllerModel.new,
       widget: MotorController.new,
       fromJson: MotorControllerModel.fromJson,
       minHeight: _normalSize * 0.92,
     );
 
-    register(
+    registerMultiTopic(
       name: NetworkAlerts.widgetType,
       model: NetworkAlertsModel.new,
       widget: NetworkAlerts.new,
@@ -281,8 +291,9 @@ class NTWidgetBuilder {
       defaultHeight: 3,
     );
 
-    registerWithAlias(
-      names: {PIDControllerWidget.widgetType, 'PID Controller'},
+    registerMultiTopic(
+      name: PIDControllerWidget.widgetType,
+      aliases: {'PID Controller'},
       model: PIDControllerModel.new,
       widget: PIDControllerWidget.new,
       fromJson: PIDControllerModel.fromJson,
@@ -292,8 +303,9 @@ class NTWidgetBuilder {
       defaultHeight: 3,
     );
 
-    registerWithAlias(
-      names: {PowerDistribution.widgetType, 'PDP'},
+    registerMultiTopic(
+      name: PowerDistribution.widgetType,
+      aliases: {'PDP'},
       model: PowerDistributionModel.new,
       widget: PowerDistribution.new,
       fromJson: PowerDistributionModel.fromJson,
@@ -303,7 +315,7 @@ class NTWidgetBuilder {
       defaultHeight: 4,
     );
 
-    register(
+    registerMultiTopic(
       name: ProfiledPIDControllerWidget.widgetType,
       model: ProfiledPIDControllerModel.new,
       widget: ProfiledPIDControllerWidget.new,
@@ -314,7 +326,7 @@ class NTWidgetBuilder {
       defaultHeight: 3,
     );
 
-    register(
+    registerMultiTopic(
       name: RelayWidget.widgetType,
       model: RelayModel.new,
       widget: RelayWidget.new,
@@ -323,7 +335,7 @@ class NTWidgetBuilder {
       defaultHeight: 2,
     );
 
-    register(
+    registerMultiTopic(
       name: RobotPreferences.widgetType,
       model: RobotPreferencesModel.new,
       widget: RobotPreferences.new,
@@ -334,14 +346,14 @@ class NTWidgetBuilder {
       defaultHeight: 3,
     );
 
-    register(
+    registerMultiTopic(
       name: SplitButtonChooser.widgetType,
       model: SplitButtonChooserModel.new,
       widget: SplitButtonChooser.new,
       fromJson: SplitButtonChooserModel.fromJson,
     );
 
-    register(
+    registerMultiTopic(
       name: SubsystemWidget.widgetType,
       model: SubsystemModel.new,
       widget: SubsystemWidget.new,
@@ -350,14 +362,15 @@ class NTWidgetBuilder {
       defaultWidth: 2,
     );
 
-    registerWithAlias(
-      names: {ThreeAxisAccelerometer.widgetType, '3AxisAccelerometer'},
+    registerMultiTopic(
+      name: ThreeAxisAccelerometer.widgetType,
+      aliases: {'3AxisAccelerometer'},
       model: ThreeAxisAccelerometerModel.new,
       widget: ThreeAxisAccelerometer.new,
       fromJson: ThreeAxisAccelerometerModel.fromJson,
     );
 
-    register(
+    registerMultiTopic(
       name: Ultrasonic.widgetType,
       model: UltrasonicModel.new,
       widget: Ultrasonic.new,
@@ -366,7 +379,7 @@ class NTWidgetBuilder {
       defaultWidth: 2,
     );
 
-    register(
+    registerMultiTopic(
       name: YAGSLSwerveDrive.widgetType,
       model: YAGSLSwerveDriveModel.new,
       widget: YAGSLSwerveDrive.new,
@@ -400,9 +413,10 @@ class NTWidgetBuilder {
   static NTWidgetModel buildNTModelFromType(
     NTConnection ntConnection,
     SharedPreferences preferences,
+    NT4StructMeta? ntStructMeta,
     String type,
     String topic, {
-    String dataType = 'Unknown',
+    NT4Type? dataType,
     double? period,
   }) {
     period ??=
@@ -417,6 +431,7 @@ class NTWidgetBuilder {
         topic: topic,
         dataType: dataType,
         period: period,
+        ntStructMeta: ntStructMeta,
       );
     }
 
@@ -427,12 +442,14 @@ class NTWidgetBuilder {
       topic: topic,
       dataType: dataType,
       period: period,
+      ntStructMeta: ntStructMeta,
     );
   }
 
   static NTWidgetModel buildNTModelFromJson(
     NTConnection ntConnection,
     SharedPreferences preferences,
+    NT4StructMeta? ntStructMeta,
     String type,
     Map<String, dynamic> jsonData, {
     Function(String message)? onWidgetTypeNotFound,
@@ -444,6 +461,7 @@ class NTWidgetBuilder {
         ntConnection: ntConnection,
         preferences: preferences,
         jsonData: jsonData,
+        ntStructMeta: ntStructMeta,
       );
     }
 
@@ -453,9 +471,10 @@ class NTWidgetBuilder {
     return SingleTopicNTWidgetModel.createDefault(
       ntConnection: ntConnection,
       preferences: preferences,
+      ntStructMeta: ntStructMeta,
       type: type,
       topic: tryCast(jsonData['topic']) ?? '',
-      dataType: tryCast(jsonData['data_type']) ?? 'Unknown',
+      dataType: tryCast(jsonData['data_type']),
       period: tryCast(jsonData['period']),
     );
   }
@@ -530,6 +549,132 @@ class NTWidgetBuilder {
     return (_modelNameBuildMap.containsKey(name) &&
             _modelJsonBuildMap.containsKey(name)) ||
         _widgetNameBuildMap.containsKey(name);
+  }
+
+  static void registerSingleTopic<
+    ModelType extends NTWidgetModel,
+    WidgetType extends NTWidget
+  >({
+    required String name,
+    required SingleTopicNTWidgetModel Function({
+      NT4Type? dataType,
+      double period,
+      required NT4StructMeta? ntStructMeta,
+      required NTConnection ntConnection,
+      required SharedPreferences preferences,
+      required String topic,
+    })
+    model,
+    required NTWidgetProvider widget,
+    required NTWidgetModel Function({
+      required Map<String, dynamic> jsonData,
+      required NTConnection ntConnection,
+      required SharedPreferences preferences,
+      required NT4StructMeta? ntStructMeta,
+    })
+    fromJson,
+    double? minWidth,
+    double? minHeight,
+    double? defaultWidth,
+    double? defaultHeight,
+    Set<String>? aliases,
+  }) {
+    registerWithAlias(
+      names: {name, ...?aliases},
+      model:
+          ({
+            NT4Type? dataType,
+            double? period,
+            NT4StructMeta? ntStructMeta,
+            required NTConnection ntConnection,
+            required SharedPreferences preferences,
+            required String topic,
+          }) => model(
+            dataType: dataType,
+            period:
+                period ??
+                (preferences.getDouble(PrefKeys.defaultPeriod) ??
+                    Defaults.defaultPeriod),
+            ntStructMeta: ntStructMeta,
+            ntConnection: ntConnection,
+            preferences: preferences,
+            topic: topic,
+          ),
+      widget: widget,
+      fromJson:
+          ({
+            required Map<String, dynamic> jsonData,
+            required NTConnection ntConnection,
+            required SharedPreferences preferences,
+            NT4StructMeta? ntStructMeta,
+          }) => fromJson(
+            jsonData: jsonData,
+            ntConnection: ntConnection,
+            preferences: preferences,
+            ntStructMeta: ntStructMeta,
+          ),
+    );
+  }
+
+  static void registerMultiTopic<
+    ModelType extends NTWidgetModel,
+    WidgetType extends NTWidget
+  >({
+    required String name,
+    required MultiTopicNTWidgetModel Function({
+      NT4Type? dataType,
+      double period,
+      required NTConnection ntConnection,
+      required SharedPreferences preferences,
+      required String topic,
+    })
+    model,
+    required NTWidgetProvider widget,
+    required NTWidgetModel Function({
+      required Map<String, dynamic> jsonData,
+      required NTConnection ntConnection,
+      required SharedPreferences preferences,
+    })
+    fromJson,
+    double? minWidth,
+    double? minHeight,
+    double? defaultWidth,
+    double? defaultHeight,
+    Set<String>? aliases,
+  }) {
+    registerWithAlias(
+      names: {name, ...?aliases},
+      model:
+          ({
+            NT4Type? dataType,
+            double? period,
+            NT4StructMeta? ntStructMeta,
+            required NTConnection ntConnection,
+            required SharedPreferences preferences,
+            required String topic,
+          }) => model(
+            dataType: dataType,
+            period:
+                period ??
+                (preferences.getDouble(PrefKeys.defaultPeriod) ??
+                    Defaults.defaultPeriod),
+            ntConnection: ntConnection,
+            preferences: preferences,
+            topic: topic,
+          ),
+      widget: widget,
+      fromJson:
+          ({
+            required Map<String, dynamic> jsonData,
+            required NTConnection ntConnection,
+            required SharedPreferences preferences,
+            NT4StructMeta? ntStructMeta,
+          }) => fromJson(
+            jsonData: jsonData,
+            ntConnection: ntConnection,
+            preferences: preferences,
+          ),
+    );
   }
 
   static void

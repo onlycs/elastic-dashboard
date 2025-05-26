@@ -30,17 +30,17 @@ void main() {
       virtualTopics: [
         NT4Topic(
           name: 'Test/Three Axis Accelerometer/X',
-          type: NT4TypeStr.kFloat32,
+          type: NT4Type.float(),
           properties: {},
         ),
         NT4Topic(
           name: 'Test/Three Axis Accelerometer/Y',
-          type: NT4TypeStr.kFloat32,
+          type: NT4Type.float(),
           properties: {},
         ),
         NT4Topic(
           name: 'Test/Three Axis Accelerometer/Z',
-          type: NT4TypeStr.kFloat32,
+          type: NT4Type.float(),
           properties: {},
         ),
       ],
@@ -57,6 +57,7 @@ void main() {
         NTWidgetBuilder.buildNTModelFromJson(
           ntConnection,
           preferences,
+          null,
           '3-Axis Accelerometer',
           threeAxisAccelerometerJson,
         );
@@ -73,6 +74,7 @@ void main() {
         NTWidgetBuilder.buildNTModelFromJson(
           ntConnection,
           preferences,
+          null,
           '3AxisAccelerometer',
           threeAxisAccelerometerJson,
         );
@@ -103,6 +105,7 @@ void main() {
         NTWidgetBuilder.buildNTModelFromJson(
           ntConnection,
           preferences,
+          null,
           '3-Axis Accelerometer',
           threeAxisAccelerometerJson,
         );

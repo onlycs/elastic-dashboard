@@ -43,7 +43,7 @@ void main() {
       virtualTopics: [
         NT4Topic(
           name: 'Test/String Array',
-          type: NT4TypeStr.kStringArr,
+          type: NT4Type.array(NT4Type.string()),
           properties: {},
         ),
       ],
@@ -64,6 +64,7 @@ void main() {
     NTWidgetModel multiColorViewModel = NTWidgetBuilder.buildNTModelFromJson(
       ntConnection,
       preferences,
+      null,
       'Multi Color View',
       multiColorViewJson,
     );
@@ -80,9 +81,10 @@ void main() {
     NTWidgetModel multiColorViewModel = SingleTopicNTWidgetModel.createDefault(
       ntConnection: ntConnection,
       preferences: preferences,
+      ntStructMeta: null,
       type: 'Multi Color View',
       topic: 'Test/String Array',
-      dataType: 'string[]',
+      dataType: NT4Type.array(NT4Type.string()),
       period: 0.100,
     );
 
@@ -97,6 +99,7 @@ void main() {
     NTWidgetModel multiColorViewModel = NTWidgetBuilder.buildNTModelFromJson(
       ntConnection,
       preferences,
+      null,
       'Multi Color View',
       multiColorViewJson,
     );
@@ -134,7 +137,7 @@ void main() {
         virtualTopics: [
           NT4Topic(
             name: 'Test/String Array',
-            type: NT4TypeStr.kStringArr,
+            type: NT4Type.array(NT4Type.string()),
             properties: {},
           ),
         ],
@@ -143,6 +146,7 @@ void main() {
         },
       ),
       preferences,
+      null,
       'Multi Color View',
       multiColorViewJson,
     );
@@ -177,13 +181,14 @@ void main() {
         virtualTopics: [
           NT4Topic(
             name: 'Test/String Array',
-            type: NT4TypeStr.kStringArr,
+            type: NT4Type.array(NT4Type.string()),
             properties: {},
           ),
         ],
         virtualValues: {'Test/String Array': []},
       ),
       preferences,
+      null,
       'Multi Color View',
       multiColorViewJson,
     );

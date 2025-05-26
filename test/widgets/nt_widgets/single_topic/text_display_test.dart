@@ -20,7 +20,7 @@ void main() {
 
   final Map<String, dynamic> textDisplayJson = {
     'topic': 'Test/Display Value',
-    'data_type': 'double',
+    'data_type': NT4Type.double().serialize(),
     'period': 0.100,
     'show_submit_button': true,
   };
@@ -36,7 +36,7 @@ void main() {
       virtualTopics: [
         NT4Topic(
           name: 'Test/Display Value',
-          type: NT4TypeStr.kFloat64,
+          type: NT4Type.double(),
           properties: {},
         ),
       ],
@@ -48,6 +48,7 @@ void main() {
     NTWidgetModel textDisplayModel = NTWidgetBuilder.buildNTModelFromJson(
       ntConnection,
       preferences,
+      null,
       'Text Display',
       textDisplayJson,
     );
@@ -66,6 +67,7 @@ void main() {
     NTWidgetModel textDisplayModel = NTWidgetBuilder.buildNTModelFromJson(
       ntConnection,
       preferences,
+      null,
       'Text View',
       textDisplayJson,
     );
@@ -86,7 +88,7 @@ void main() {
         virtualTopics: [
           NT4Topic(
             name: 'Test/Display Value',
-            type: NT4TypeStr.kFloat64,
+            type: NT4Type.double(),
             properties: {'persistent': true},
           ),
         ],
@@ -96,8 +98,9 @@ void main() {
       TextDisplayModel textDisplayModel = TextDisplayModel(
         ntConnection: ntConnection,
         preferences: preferences,
+        ntStructMeta: null,
         topic: 'Test/Display Value',
-        dataType: 'double',
+        dataType: NT4Type.double(),
         period: 0.100,
       );
 
@@ -112,8 +115,9 @@ void main() {
       TextDisplayModel textDisplayModel = TextDisplayModel(
         ntConnection: ntConnection,
         preferences: preferences,
+        ntStructMeta: null,
         topic: 'Test/Display Value',
-        dataType: 'double',
+        dataType: NT4Type.double(),
         period: 0.100,
       );
 
@@ -128,8 +132,9 @@ void main() {
       TextDisplayModel textDisplayModel = TextDisplayModel(
         ntConnection: ntConnection,
         preferences: preferences,
+        ntStructMeta: null,
         topic: 'Test/Display Value',
-        dataType: 'double',
+        dataType: NT4Type.double(),
         period: 0.100,
       );
 
@@ -141,8 +146,9 @@ void main() {
     TextDisplayModel textDisplayModel = TextDisplayModel(
       ntConnection: ntConnection,
       preferences: preferences,
+      ntStructMeta: null,
       topic: 'Test/Display Value',
-      dataType: 'double',
+      dataType: NT4Type.double(),
       period: 0.100,
       showSubmitButton: true,
     );
@@ -162,8 +168,9 @@ void main() {
       TextDisplayModel textDisplayModel = TextDisplayModel(
         ntConnection: ntConnection,
         preferences: preferences,
+        ntStructMeta: null,
         topic: 'Test/Display Value',
-        dataType: 'double',
+        dataType: NT4Type.double(),
         period: 0.100,
         showSubmitButton: true,
       );
@@ -212,15 +219,15 @@ void main() {
               virtualTopics: [
                 NT4Topic(
                   name: 'Test/Display Value',
-                  type: NT4TypeStr.kInt,
+                  type: NT4Type.int(),
                   properties: {},
                 ),
               ],
-              virtualValues: {'Test/Display Value': 0},
             ),
         preferences: preferences,
+        ntStructMeta: null,
         topic: 'Test/Display Value',
-        dataType: 'int',
+        dataType: NT4Type.int(),
         period: 0.100,
         showSubmitButton: true,
       );
@@ -266,15 +273,16 @@ void main() {
               virtualTopics: [
                 NT4Topic(
                   name: 'Test/Display Value',
-                  type: NT4TypeStr.kBool,
+                  type: NT4Type.boolean(),
                   properties: {},
                 ),
               ],
               virtualValues: {'Test/Display Value': false},
             ),
         preferences: preferences,
+        ntStructMeta: null,
         topic: 'Test/Display Value',
-        dataType: 'boolean',
+        dataType: NT4Type.boolean(),
         period: 0.100,
         showSubmitButton: true,
       );
@@ -328,15 +336,16 @@ void main() {
               virtualTopics: [
                 NT4Topic(
                   name: 'Test/Display Value',
-                  type: NT4TypeStr.kString,
+                  type: NT4Type.string(),
                   properties: {},
                 ),
               ],
               virtualValues: {'Test/Display Value': 'Hello'},
             ),
         preferences: preferences,
+        ntStructMeta: null,
         topic: 'Test/Display Value',
-        dataType: 'string',
+        dataType: NT4Type.string(),
         period: 0.100,
         showSubmitButton: true,
       );
@@ -393,7 +402,7 @@ void main() {
               virtualTopics: [
                 NT4Topic(
                   name: 'Test/Display Value',
-                  type: NT4TypeStr.kIntArr,
+                  type: NT4Type.array(NT4Type.int()),
                   properties: {},
                 ),
               ],
@@ -402,8 +411,9 @@ void main() {
               },
             ),
         preferences: preferences,
+        ntStructMeta: null,
         topic: 'Test/Display Value',
-        dataType: 'int[]',
+        dataType: NT4Type.array(NT4Type.string()),
         period: 0.100,
         showSubmitButton: true,
       );
@@ -458,7 +468,7 @@ void main() {
               virtualTopics: [
                 NT4Topic(
                   name: 'Test/Display Value',
-                  type: NT4TypeStr.kBoolArr,
+                  type: NT4Type.array(NT4Type.boolean()),
                   properties: {},
                 ),
               ],
@@ -467,8 +477,9 @@ void main() {
               },
             ),
         preferences: preferences,
+        ntStructMeta: null,
         topic: 'Test/Display Value',
-        dataType: 'boolean[]',
+        dataType: NT4Type.array(NT4Type.boolean()),
         period: 0.100,
         showSubmitButton: true,
       );
@@ -526,7 +537,7 @@ void main() {
               virtualTopics: [
                 NT4Topic(
                   name: 'Test/Display Value',
-                  type: NT4TypeStr.kFloat64Arr,
+                  type: NT4Type.array(NT4Type.double()),
                   properties: {},
                 ),
               ],
@@ -535,8 +546,9 @@ void main() {
               },
             ),
         preferences: preferences,
+        ntStructMeta: null,
         topic: 'Test/Display Value',
-        dataType: 'double[]',
+        dataType: NT4Type.array(NT4Type.double()),
         period: 0.100,
         showSubmitButton: true,
       );
@@ -590,7 +602,7 @@ void main() {
               virtualTopics: [
                 NT4Topic(
                   name: 'Test/Display Value',
-                  type: NT4TypeStr.kStringArr,
+                  type: NT4Type.array(NT4Type.string()),
                   properties: {},
                 ),
               ],
@@ -599,8 +611,9 @@ void main() {
               },
             ),
         preferences: preferences,
+        ntStructMeta: null,
         topic: 'Test/Display Value',
-        dataType: 'string[]',
+        dataType: NT4Type.array(NT4Type.string()),
         period: 0.100,
         showSubmitButton: true,
       );
@@ -657,7 +670,7 @@ void main() {
               virtualTopics: [
                 NT4Topic(
                   name: 'Test/Display Value',
-                  type: NT4TypeStr.kString,
+                  type: NT4Type.string(),
                   properties: {},
                 ),
               ],
@@ -666,8 +679,9 @@ void main() {
               },
             ),
         preferences: preferences,
+        ntStructMeta: null,
         topic: 'Test/Display Value',
-        dataType: 'string',
+        dataType: NT4Type.string(),
         period: 0.100,
         showSubmitButton: false,
       );
@@ -720,8 +734,9 @@ void main() {
     TextDisplayModel textDisplayModel = TextDisplayModel(
       ntConnection: ntConnection,
       preferences: preferences,
+      ntStructMeta: null,
       topic: 'Test/Display Value',
-      dataType: 'string',
+      dataType: NT4Type.string(),
       period: 0.100,
       showSubmitButton: true,
     );

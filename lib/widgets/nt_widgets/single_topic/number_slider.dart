@@ -52,6 +52,7 @@ class NumberSliderModel extends SingleTopicNTWidgetModel {
     required super.ntConnection,
     required super.preferences,
     required super.topic,
+    required super.ntStructMeta,
     double minValue = -1.0,
     double maxValue = 1.0,
     int divisions = 5,
@@ -67,6 +68,7 @@ class NumberSliderModel extends SingleTopicNTWidgetModel {
   NumberSliderModel.fromJson({
     required super.ntConnection,
     required super.preferences,
+    required super.ntStructMeta,
     required Map<String, dynamic> jsonData,
   }) : super.fromJson(jsonData: jsonData) {
     _minValue =
@@ -185,7 +187,7 @@ class NumberSliderModel extends SingleTopicNTWidgetModel {
       ntConnection.publishTopic(ntTopic!);
     }
 
-    if (dataType == NT4TypeStr.kInt) {
+    if (dataType == NT4Type.int()) {
       ntConnection.updateDataFromTopic(ntTopic!, value.round());
     } else {
       ntConnection.updateDataFromTopic(ntTopic!, value);
@@ -221,7 +223,7 @@ class NumberSlider extends NTWidget {
         double divisionSeparation =
             (model.maxValue - model.minValue) / (model.divisions - 1);
 
-        int fractionDigits = (model.dataType == NT4TypeStr.kInt) ? 0 : 2;
+        int fractionDigits = (model.dataType == NT4Type.int()) ? 0 : 2;
 
         return Column(
           children: [
@@ -256,7 +258,7 @@ class NumberSlider extends NTWidget {
                       model.dragging.value = true;
                     },
                     onChanged: (value) {
-                      if (model.dataType == NT4TypeStr.kInt) {
+                      if (model.dataType == NT4Type.int()) {
                         model.displayValue.value = value.roundToDouble();
                       } else {
                         model.displayValue.value = value;

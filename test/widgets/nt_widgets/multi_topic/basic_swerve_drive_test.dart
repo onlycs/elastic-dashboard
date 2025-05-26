@@ -37,6 +37,7 @@ void main() {
     NTWidgetModel swerveModel = NTWidgetBuilder.buildNTModelFromJson(
       ntConnection,
       preferences,
+      null,
       'SwerveDrive',
       swerveJson,
     );
@@ -107,6 +108,7 @@ void main() {
     NTWidgetModel swerveModel = NTWidgetBuilder.buildNTModelFromJson(
       ntConnection,
       preferences,
+      null,
       'SwerveDrive',
       swerveJson,
     );

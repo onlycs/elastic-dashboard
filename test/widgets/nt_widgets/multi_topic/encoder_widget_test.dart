@@ -30,12 +30,12 @@ void main() {
       virtualTopics: [
         NT4Topic(
           name: 'Test/Encoder/Distance',
-          type: NT4TypeStr.kFloat32,
+          type: NT4Type.float(),
           properties: {},
         ),
         NT4Topic(
           name: 'Test/Encoder/Speed',
-          type: NT4TypeStr.kFloat32,
+          type: NT4Type.float(),
           properties: {},
         ),
       ],
@@ -50,6 +50,7 @@ void main() {
     NTWidgetModel encoderWidgetModel = NTWidgetBuilder.buildNTModelFromJson(
       ntConnection,
       preferences,
+      null,
       'Encoder',
       encoderWidgetJson,
     );
@@ -62,6 +63,7 @@ void main() {
     NTWidgetModel encoderWidgetModel = NTWidgetBuilder.buildNTModelFromJson(
       ntConnection,
       preferences,
+      null,
       'Quadrature Encoder',
       encoderWidgetJson,
     );
@@ -87,6 +89,7 @@ void main() {
     NTWidgetModel encoderWidgetModel = NTWidgetBuilder.buildNTModelFromJson(
       ntConnection,
       preferences,
+      null,
       'Encoder',
       encoderWidgetJson,
     );

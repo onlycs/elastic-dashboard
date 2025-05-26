@@ -68,7 +68,7 @@ class CommandSchedulerModel extends MultiTopicNTWidgetModel {
 
     _cancelTopic ??= ntConnection.publishNewTopic(
       cancelTopicName,
-      NT4TypeStr.kIntArr,
+      NT4Type.array(NT4Type.int()),
     );
 
     if (_cancelTopic == null) {
