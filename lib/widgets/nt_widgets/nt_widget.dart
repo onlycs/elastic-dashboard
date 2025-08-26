@@ -52,8 +52,6 @@ sealed class NTWidgetModel extends ChangeNotifier {
     this.period = period ??
         preferences.getDouble(PrefKeys.defaultPeriod) ??
         Defaults.defaultPeriod;
-
-    init();
   }
 
   NTWidgetModel.fromJson({
@@ -66,8 +64,6 @@ sealed class NTWidgetModel extends ChangeNotifier {
     _period = tryCast(jsonData['period']) ??
         preferences.getDouble(PrefKeys.defaultPeriod) ??
         Defaults.defaultPeriod;
-
-    init();
   }
 
   @mustCallSuper
@@ -136,7 +132,9 @@ class SingleTopicNTWidgetModel extends NTWidgetModel {
     this.ntStructMeta,
     this.dataType,
     super.period,
-  }) : super();
+  }) : super() {
+    init();
+  }
 
   SingleTopicNTWidgetModel.createDefault({
     required super.ntConnection,
@@ -147,7 +145,9 @@ class SingleTopicNTWidgetModel extends NTWidgetModel {
     this.dataType,
     super.period,
   })  : _typeOverride = type,
-        super();
+        super() {
+    init();
+  }
 
   SingleTopicNTWidgetModel.fromJson({
     required super.ntConnection,
@@ -160,6 +160,8 @@ class SingleTopicNTWidgetModel extends NTWidgetModel {
     if (structMetaJson != null) {
       ntStructMeta = NT4StructMeta.fromJson(structMetaJson);
     }
+
+    init();
   }
 
   @override
@@ -257,7 +259,13 @@ class SingleTopicNTWidgetModel extends NTWidgetModel {
   @override
   void resetSubscription() {
     if (subscription == null) {
-      subscription = ntConnection.subscribe(topic, period);
+      subscription = ntConnection.subscribeWithOptions(
+        topic,
+        NT4SubscriptionOptions(
+          periodicRateSeconds: period,
+          structMeta: ntStructMeta,
+        ),
+      );
 
       ntTopic = null;
 
@@ -268,7 +276,13 @@ class SingleTopicNTWidgetModel extends NTWidgetModel {
     bool resetDataType = subscription!.topic != topic;
 
     ntConnection.unSubscribe(subscription!);
-    subscription = ntConnection.subscribe(topic, period);
+    subscription = ntConnection.subscribeWithOptions(
+      topic,
+      NT4SubscriptionOptions(
+        periodicRateSeconds: period,
+        structMeta: ntStructMeta,
+      ),
+    );
 
     ntTopic = null;
 
@@ -297,13 +311,17 @@ class MultiTopicNTWidgetModel extends NTWidgetModel {
     required super.topic,
     NT4Type? dataType, // To allow for stubbing in NTWidgetBuilder
     super.period,
-  }) : super();
+  }) : super() {
+    init();
+  }
 
   MultiTopicNTWidgetModel.fromJson({
     required super.ntConnection,
     required super.preferences,
     required super.jsonData,
-  }) : super.fromJson();
+  }) : super.fromJson() {
+    init();
+  }
 
   @override
   @mustCallSuper
